@@ -88,9 +88,9 @@ object Form2: TForm2
   object CheckBox2: TCheckBox
     Left = 8
     Top = 56
-    Width = 97
+    Width = 145
     Height = 17
-    Caption = 'CheckBox2'
+    Caption = #1051#1086#1074#1091#1096#1082#1080' ('#1090#1077#1089#1090#1080#1088#1091#1077#1090#1089#1103')'
     TabOrder = 2
     Visible = False
   end

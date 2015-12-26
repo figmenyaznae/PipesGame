@@ -34,6 +34,20 @@ object Form4: TForm4
     Height = 13
     Caption = 'Label2'
   end
+  object Label3: TLabel
+    Left = 16
+    Top = 88
+    Width = 36
+    Height = 13
+    Caption = 'Bonus1'
+  end
+  object Label4: TLabel
+    Left = 16
+    Top = 104
+    Width = 36
+    Height = 13
+    Caption = 'Bonus2'
+  end
   object StringGrid1: TStringGrid
     Left = 96
     Top = 24

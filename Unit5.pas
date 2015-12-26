@@ -4,17 +4,23 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, IniFiles;
+  Dialogs, StdCtrls, IniFiles, Buttons;
 
 type
   TForm5 = class(TForm)
     Edit1: TEdit;
     Button1: TButton;
     Button2: TButton;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    ListBox1: TListBox;
     procedure Edit1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure ListBox1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,6 +69,10 @@ begin
    p[i].bChange:=strtoint(ReadString('USERS','U'+inttostr(i)+'C','0'));
   end;
  end;
+ ListBox1.Items.Clear;
+ for i:=1 to n do
+  ListBox1.Items.Add(p[i].Name);
+ SpeedButton2.Click;
 end;
 
 procedure TForm5.Button1Click(Sender: TObject);
@@ -112,6 +122,27 @@ begin
  if pNum=1 then MessageDlg('Вы являетесь администратором.',mtInformation,[mbOk],0);
  if (MessageDlg('Вы зашли первый раз, хотите просмотреть справку?',mtConfirmation,[mbYes,mbNo],0)=mryes) then
   Form1.N6.Click;
+end;
+
+procedure TForm5.ListBox1Click(Sender: TObject);
+begin
+ Edit1.Text:=ListBox1.Items.Strings[ListBox1.ItemIndex];
+end;
+
+procedure TForm5.SpeedButton1Click(Sender: TObject);
+begin
+ Form5.Height:=247;
+ ListBox1.Visible:=true;
+ SpeedButton2.Visible:=true;
+ SpeedButton1.Visible:=false;
+end;
+
+procedure TForm5.SpeedButton2Click(Sender: TObject);
+begin
+ Form5.Height:=130;
+ ListBox1.Visible:=false;
+ SpeedButton2.Visible:=false;
+ SpeedButton1.Visible:=true;
 end;
 
 end.
