@@ -1,6 +1,6 @@
 object Form4: TForm4
-  Left = 197
-  Top = 70
+  Left = 462
+  Top = 153
   Width = 417
   Height = 308
   Caption = 'System'
@@ -17,7 +17,7 @@ object Form4: TForm4
   object Label1: TLabel
     Left = 40
     Top = 32
-    Width = 25
+    Width = 14
     Height = 32
     Caption = '0'
     Font.Charset = DEFAULT_CHARSET
@@ -26,6 +26,13 @@ object Form4: TForm4
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 8
+    Width = 32
+    Height = 13
+    Caption = 'Label2'
   end
   object StringGrid1: TStringGrid
     Left = 96
@@ -39,5 +46,32 @@ object Form4: TForm4
     RowCount = 7
     FixedRows = 0
     TabOrder = 0
+  end
+  object Edit1: TEdit
+    Left = 16
+    Top = 200
+    Width = 49
+    Height = 21
+    TabOrder = 1
+    Text = 'Edit1'
+    OnKeyPress = Edit1KeyPress
+  end
+  object Edit2: TEdit
+    Left = 16
+    Top = 176
+    Width = 49
+    Height = 21
+    TabOrder = 2
+    Text = 'Edit2'
+    OnKeyPress = Edit2KeyPress
+  end
+  object Edit3: TEdit
+    Left = 16
+    Top = 224
+    Width = 49
+    Height = 21
+    TabOrder = 3
+    Text = 'Edit3'
+    OnKeyPress = Edit3KeyPress
   end
 end

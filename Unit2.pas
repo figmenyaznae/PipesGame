@@ -28,13 +28,14 @@ var
 
 implementation
 
-uses Unit1;
+uses Unit1, Unit5;
 
 {$R *.dfm}
 
 procedure TForm2.Button1Click(Sender: TObject);
 begin
  Form1.StatusBar1.Visible:=CheckBox1.Checked;
+ Unit5.p[Unit5.pNum].Name:=Edit1.Text;
  Form2.Close;
 end;
 
