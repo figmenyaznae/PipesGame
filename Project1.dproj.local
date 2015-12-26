@@ -1,2 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2012.03.31 02:26:57.453.dproj,E:\player1\1.4b\Project1.dproj=E:\player1\1.5b\Project1.dproj</Transaction>
+    <Transaction>2012.03.31 02:27:05.475.pas,E:\player1\1.4b\Unit5.pas=E:\player1\1.5b\Unit5.pas</Transaction>
+    <Transaction>2012.03.31 02:27:05.475.dfm,E:\player1\1.4b\Unit5.dfm=E:\player1\1.5b\Unit5.dfm</Transaction>
+    <Transaction>2012.03.31 02:27:25.177.pas,E:\player1\1.3b\Unit1.pas=E:\player1\1.5b\Unit1.pas</Transaction>
+    <Transaction>2012.03.31 02:27:25.177.dfm,E:\player1\1.3b\Unit1.dfm=E:\player1\1.5b\Unit1.dfm</Transaction>
+    <Transaction>2012.03.31 02:27:37.341.pas,E:\player1\1.3b\Unit2.pas=E:\player1\1.5b\Unit2.pas</Transaction>
+    <Transaction>2012.03.31 02:27:37.341.dfm,E:\player1\1.3b\Unit2.dfm=E:\player1\1.5b\Unit2.dfm</Transaction>
+    <Transaction>2012.03.31 02:27:51.394.pas,E:\player1\1.3b\Unit4.pas=E:\player1\1.5b\Unit4.pas</Transaction>
+    <Transaction>2012.03.31 02:27:51.394.dfm,E:\player1\1.3b\Unit4.dfm=E:\player1\1.5b\Unit4.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

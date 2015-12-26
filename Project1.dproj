@@ -23,7 +23,7 @@
 			<DCC_ImageBase>00400000</DCC_ImageBase>
 			<DCC_UsePackage>vcl;rtl;vclx;indy;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;vcldb;soaprtl;VclSmp;dbexpress;dbxcds;inetdb;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP</DCC_UsePackage>
 			<DCC_DependencyCheckOutputName>Project1.exe</DCC_DependencyCheckOutputName>
-			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_Platform>x86</DCC_Platform>
 			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
 			<DCC_N>true</DCC_N>
@@ -45,13 +45,13 @@
 			<DelphiCompile Include="Project1.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\1.3b\Unit1.pas">
+			<DCCReference Include="Unit1.pas">
 				<Form>Form1</Form>
 			</DCCReference>
-			<DCCReference Include="..\1.3b\Unit2.pas">
+			<DCCReference Include="Unit2.pas">
 				<Form>Form2</Form>
 			</DCCReference>
-			<DCCReference Include="..\1.3b\Unit4.pas">
+			<DCCReference Include="Unit4.pas">
 				<Form>Form4</Form>
 			</DCCReference>
 			<DCCReference Include="Unit5.pas">
@@ -84,7 +84,7 @@
 						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
 					</Parameters>
 					<Language>
-						<Language Name="RootDir">E:\player1\1.4b\</Language>
+						<Language Name="RootDir">E:\player1\1.5b\</Language>
 					</Language>
 					<VersionInfo>
 						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
