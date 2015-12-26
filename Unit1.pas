@@ -86,18 +86,12 @@ type
 
 var
   Form1: TForm1;
-  Pipes:array[0..5]of pipe;//массив объектов "труба"
-  a:mas;//игровое поле
-  b:pmas;//массив раскладок
-  BottomFloat,TopFloat:boolean;//BottomFloat/TopFloat - флаг заполненности нижнего/верхнего куска трубы
-  ValveRotation,ValveOpen,InGame:boolean;//ValveRotation - крутится ли труба, ValveOpen - течет ли вода, InGame - открыто ли игровое поле
-  PipeReplace,PipeCompltn:boolean;//PipeReplace - режим "замена",PipeCompltn - финальная проверка трубо провода
-  time,btime:byte;//btime - бонусное время для "стоп", time - остаток времени
-  n,m,k:byte;//n,m - размерность, k - номер поля
-  ValveAngle,PipeLength,pasteNum:byte;
-  bx,by,bn,abx,aby,abn:integer;//bx,by - коор-ты бонуса, bn - тип; abx,aby,abn - для второго бонуса
-  tx,ty,atx,aty:integer;//tx,ty - коор-ты трубы-ловушки, atx,aty - для второй
-  x,y,i:integer;//x,y - текущее положение воды, i - направление трубы
+  Pipes:array[0..5]of pipe;
+  a:mas;
+  b:pmas;
+  BottomFloat,TopFloat,ValveRotation,ValveOpen,InGame,PipeReplace,PipeCompltn:boolean;
+  n,m,k,time,btime,ValveAngle,PipeLength,pasteNum:byte;
+  bx,by,bn,x,y,i:integer;
 
 implementation
 
@@ -269,7 +263,7 @@ end;
  Image7.Canvas.Brush.Color:=clBtnFace;
 
  pasteNum:=0;
- N9.Click;
+ n9.Click;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -305,30 +299,6 @@ begin
   else bn:=2;
  bx:=random(n)+1;
  by:=random(m)+1;
- if m=9 then
- begin
-  Randomize;
-  abn:=random(20);
-  if abn<10 then abn:=3
-  else if abn<17 then abn:=1
-   else abn:=2;
-  abx:=random(n)+1;
-  aby:=random(m)+1;
- end;
- if Form2.CheckBox2.Checked then
-  begin
-  Randomize;
-  if n=7 then
-  begin
-   tx:=random(n)+1;
-   ty:=random(m)+1;
-  end;
-  if m=9 then
-  begin
-   atx:=random(n)+1;
-   aty:=random(m)+1;
-  end;
- end;
  if m=7 then k:=k+5;
  if m=9 then k:=k+10;
  for i:=1 to n do
@@ -386,8 +356,6 @@ begin
   else
    ImageList2.Draw(Image3.Canvas,0,0,6,true);
   ImageList1.Draw(Image1.Canvas,a[bx,by].X,a[bx,by].Y,7+bn,true);
-  if m=9 then
-   ImageList1.Draw(Image1.Canvas,a[abx,aby].X,a[abx,aby].Y,7+abn,true);
  end;
  Image5.Canvas.Rectangle(-1,-1,58,58);
  Image6.Canvas.Rectangle(-1,-1,58,58);
@@ -449,20 +417,17 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
- if InGame then
-  if not ValveRotation then
-  begin
-   PipeLength:=0;
-   ValveRotation:=true;
-   x:=n;
-   y:=1;
-   i:=1;
-   BottomFloat:=true;
-   ValveOpen:=true;
-   button2.Click;
-  end
-  else
-   Timer3.Interval:=100;
+ if (not ValveRotation) and InGame then
+ begin
+  PipeLength:=0;
+  ValveRotation:=true;
+  x:=n;
+  y:=1;
+  i:=1;
+  BottomFloat:=true;
+  ValveOpen:=true;
+  button2.Click;
+ end;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
@@ -551,17 +516,10 @@ begin
    begin
     if a[bx,by].Floated then
      case bn of
-     1:if Unit5.p[Unit5.pNum].bStop<255 then inc(Unit5.p[Unit5.pNum].bStop);
-     2:if Unit5.p[Unit5.pNum].bFreeze<255 then inc(Unit5.p[Unit5.pNum].bFreeze);
-     3:if Unit5.p[Unit5.pNum].bChange<255 then inc(Unit5.p[Unit5.pNum].bChange);
+     1:inc(Unit5.p[Unit5.pNum].bStop);
+     2:inc(Unit5.p[Unit5.pNum].bFreeze);
+     3:inc(Unit5.p[Unit5.pNum].bChange);
      end;
-    if m=9 then
-     if a[abx,aby].Floated then
-      case abn of
-      1:if Unit5.p[Unit5.pNum].bStop<255 then inc(Unit5.p[Unit5.pNum].bStop);
-      2:if Unit5.p[Unit5.pNum].bFreeze<255 then inc(Unit5.p[Unit5.pNum].bFreeze);
-      3:if Unit5.p[Unit5.pNum].bChange<255 then inc(Unit5.p[Unit5.pNum].bChange);
-      end;
     bstr[1]:='Остановка';
     bstr[2]:='Замедление';
     bstr[3]:='Замена';
@@ -577,8 +535,6 @@ begin
     #10+#13+'Ваша труба - '+inttostr(PipeLength)+'звеньев',mtInformation,[mbOK],0);
     if a[bx,by].Floated then
      MessageDlg('Бонус получен: '+bstr[bn],mtInformation,[mbOk],0);
-    if (m=9) and (a[abx,aby].Floated) then
-     MessageDlg('Бонус получен: '+bstr[abn],mtInformation,[mbOk],0);
     n9.Click;
    end
    else
@@ -602,9 +558,7 @@ begin
  ValveOpen:=false;
  ValveRotation:=false;
  time:=0;
- btime:=0;
  Timer1.Interval:=1000;
- Timer3.Interval:=500;
 
  Form1.Width:=57*5+152;
  Form1.Height:=57*5+120;
@@ -614,9 +568,6 @@ begin
  Image3.Canvas.Rectangle(-1,-1,58,58);
  Image4.Left:=Form1.Width-130;
  Image4.Canvas.Rectangle(-1,-1,101,101);
- Image5.Left:=Form1.Width-130;
- Image6.Left:=Form1.Width-130;
- Image7.Left:=Form1.Width-130;
  Imagelist3.Draw(Image4.Canvas,0,0,0,true);
  Button4.Visible:=true;
  PipeReplace:=false;
@@ -675,8 +626,6 @@ begin
  Form4.Edit1.Text:=inttostr(unit5.p[unit5.pNum].bStop);
  Form4.Edit2.Text:=inttostr(unit5.p[unit5.pNum].bFreeze);
  Form4.Edit3.Text:=inttostr(unit5.p[unit5.pNum].bChange);
- Form4.Label3.Caption:=inttostr(bn)+' ('+inttostr(bx)+':'+inttostr(by)+')';
- Form4.Label4.Caption:=inttostr(abn)+' ('+inttostr(abx)+':'+inttostr(aby)+')';
  Form4.show;
 end;
 

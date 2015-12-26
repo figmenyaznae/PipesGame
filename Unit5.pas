@@ -105,6 +105,7 @@ begin
   Form1.Alvbry1.Visible:=false;
  end;
  Form1.Show;
+ Form1.Button2.Click;
 end;
 
 procedure TForm5.Button2Click(Sender: TObject);

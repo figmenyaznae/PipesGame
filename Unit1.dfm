@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 257
-  Top = 200
+  Left = 103
+  Top = 28
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = '"'#1058#1088#1091#1073#1099'"'
@@ -130,7 +130,6 @@ object Form1: TForm1
     Top = 48
     Width = 57
     Height = 57
-    Hint = #1047#1072#1084#1077#1076#1083#1103#1077#1090' '#1074#1088#1077#1084#1103' '#1074' 2 '#1088#1072#1079#1072' ('#1085#1086' '#1085#1077' '#1073#1086#1083#1077#1077' 8)'
     ParentShowHint = False
     ShowHint = False
     Transparent = True
@@ -141,7 +140,6 @@ object Form1: TForm1
     Top = 104
     Width = 57
     Height = 57
-    Hint = #1055#1088#1080#1086#1089#1090#1072#1085#1072#1074#1083#1080#1074#1072#1077#1090' '#1074#1088#1077#1084#1103' '#1085#1072' 10 '#1089#1077#1082#1091#1085#1076
     Transparent = True
     OnClick = Image6Click
   end
@@ -150,7 +148,6 @@ object Form1: TForm1
     Top = 160
     Width = 57
     Height = 57
-    Hint = #1047#1072#1084#1077#1085#1103#1077#1090' '#1074#1099#1073#1080#1088#1072#1077#1084#1099#1081' '#1101#1083#1077#1084#1077#1085#1090' '#1085#1072' '#1079#1072#1076#1072#1085#1085#1099#1081
     Transparent = True
     OnMouseDown = Image7MouseDown
   end

@@ -14,8 +14,6 @@ type
     Edit2: TEdit;
     Edit3: TEdit;
     Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
     procedure Edit2KeyPress(Sender: TObject; var Key: Char);
