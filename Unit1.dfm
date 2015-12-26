@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 234
-  Top = 212
+  Left = 156
+  Top = 46
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = '"'#1058#1088#1091#1073#1099'"'
-  ClientHeight = 455
+  ClientHeight = 454
   ClientWidth = 830
   Color = clBtnFace
   TransparentColorValue = clWhite
@@ -179,7 +179,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 436
+    Top = 435
     Width = 830
     Height = 19
     AutoHint = True
@@ -5302,6 +5302,10 @@ object Form1: TForm1
         Hint = #1042#1099#1081#1090#1080' '#1080#1079' '#1087#1088#1086#1075#1088#1072#1084#1084#1099
         OnClick = N10Click
       end
+    end
+    object Alvbry1: TMenuItem
+      Caption = #1040#1076#1084#1080#1085#1082#1072
+      OnClick = Alvbry1Click
     end
   end
   object Timer1: TTimer

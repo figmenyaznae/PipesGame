@@ -35,7 +35,8 @@ type
     Timer1: TTimer;//òàéìåğ, îòâå÷àşùèé çà îáğàòíûé îòñ÷åò âğåìåíè
     Timer2: TTimer;//òàéìåğ, îòâå÷àşùèé çà ïîâîğîò âåíòèëÿ
     Timer3: TTimer;//òàéìåğ, îòâå÷àşùèé çà àíèìàöèş âîäû
-    StatusBar1: TStatusBar;//Ïíåëü ñâîéñòâ
+    StatusBar1: TStatusBar;
+    Alvbry1: TMenuItem;//Ïíåëü ñâîéñòâ
     procedure FormCreate(Sender: TObject);//íà÷àëüíàÿ çàãğóçêà
     procedure Button1Click(Sender: TObject);//íà÷àëî èãğû
     procedure Button2Click(Sender: TObject);//ïåğåğèñîâêà èíòåğôåéñà
@@ -54,7 +55,8 @@ type
     procedure Timer3Timer(Sender: TObject);//òàéìåğ, îòâå÷àşùèé çà àíèìàöèş âîäû
     procedure FormClose(Sender: TObject; var Action: TCloseAction);//Äåéñòâèÿ, íåîáõîäèìûå äëÿ âûïîëíåíèÿ ïåğåä çàêğûòèåì ôîğìû
     procedure N6Click(Sender: TObject);//Âûçîâ ñïğàâêè
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);//Çàïğîñ ïåğåä âûõîäîì
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure Alvbry1Click(Sender: TObject);//Çàïğîñ ïåğåä âûõîäîì
 
   private
     { Private declarations }
@@ -77,9 +79,10 @@ type
   pmas=array[1..15]of bmas;
 
   Element=record
-  Value:word;
-  Name:string[16];
+   Value:word;
+   Name:string[16];
   end;
+
 
 var
   Form1: TForm1;
@@ -92,13 +95,12 @@ var
   BestTime,BestLength,BestShort:element;
 implementation
 
-uses Unit2, Unit3;
+uses Unit2, Unit3, Unit4, Unit5;
 
 {$R *.dfm}
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
- randomize;
  with pipes[0] do
  begin
   top:=true;
@@ -252,19 +254,18 @@ end;
  b[15][6,1]:=2; b[15][6,2]:=2; b[15][6,3]:=2; b[15][6,4]:=1; b[15][6,5]:=2; b[15][6,6]:=0; b[15][6,7]:=0; b[15][6,8]:=0; b[15][6,9]:=0;
  b[15][7,1]:=1; b[15][7,2]:=0; b[15][7,3]:=0; b[15][7,4]:=0; b[15][7,5]:=0; b[15][7,6]:=0; b[15][7,7]:=0; b[15][7,8]:=0; b[15][7,9]:=0;
 
-
  Image1.Canvas.Brush.Color:=clBtnFace;
  Image2.Canvas.Brush.Color:=clBtnFace;
  Image3.Canvas.Brush.Color:=clBtnFace;
  Image4.Canvas.Brush.Color:=clBtnFace;
- with TIniFile.Create(ExtractFilePath(Application.ExeName)+'settings.ini') do
+ with TIniFile.Create(ExtractFilePath(Application.ExeName)+'data.ini') do
  begin
-  BestTime.Name:=ReadString('MAIN','Nickname1','Èãğîê1');
-  BestTime.Value:=StrtoInt(ReadString('MAIN','Value1','30'));
-  BestLength.Name:=ReadString('MAIN','Nickname2','Èãğîê1');
-  BestLength.Value:=StrtoInt(ReadString('MAIN','Value2','0'));
-  BestShort.Name:=ReadString('MAIN','Nickname3','Èãğîê1');
-  BestShort.Value:=StrtoInt(ReadString('MAIN','Value3','100'));
+  BestTime.Name:=ReadString('HIGHSCORE','Nickname1','Èãğîê1');
+  BestTime.Value:=StrtoInt(ReadString('HIGHSCORE','Value1','30'));
+  BestLength.Name:=ReadString('HIGHSCORE','Nickname2','Èãğîê1');
+  BestLength.Value:=StrtoInt(ReadString('HIGHSCORE','Value2','0'));
+  BestShort.Name:=ReadString('HIGHSCORE','Nickname3','Èãğîê1');
+  BestShort.Value:=StrtoInt(ReadString('HIGHSCORE','Value3','100'));
  end;
  n9.Click;
 end;
@@ -294,6 +295,7 @@ begin
  Label2.Visible:=true;
  TopFloat:=false;
  BottomFloat:=false;
+ Randomize;
  k:=random(5)+1;
  if m=7 then k:=k+5;
  if m=9 then k:=k+10;
@@ -302,11 +304,11 @@ begin
   begin
    a[i,j].X:=(j-1)*57;
    a[i,j].Y:=(i-1)*57;
-   if b[k+1][i,j]=0 then
+   if b[k][i,j]=0 then
     a[i,j].PipeIndex:=random(6);
-   if b[k+1][i,j]=1 then
+   if b[k][i,j]=1 then
     a[i,j].PipeIndex:=random(2)+4;
-   if b[k+1][i,j]=2 then
+   if b[k][i,j]=2 then
     a[i,j].PipeIndex:=random(4);
    a[i,j].Floated:=false;
   end;
@@ -350,19 +352,26 @@ end;
 
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
+var Xe,Ye:integer;
 begin
- if InGame then
+ if (x>0)and(x<57*9) then
  begin
- if not a[(Y div 57)+1,(X div 57)+1].Floated then
- case a[(Y div 57)+1,(X div 57)+1].PipeIndex of
- 0:a[(Y div 57)+1,(X div 57)+1].PipeIndex:=1;
- 1:a[(Y div 57)+1,(X div 57)+1].PipeIndex:=2;
- 2:a[(Y div 57)+1,(X div 57)+1].PipeIndex:=3;
- 3:a[(Y div 57)+1,(X div 57)+1].PipeIndex:=0;
- 4:a[(Y div 57)+1,(X div 57)+1].PipeIndex:=5;
- 5:a[(Y div 57)+1,(X div 57)+1].PipeIndex:=4;
- end;
- button2.Click;
+  Xe:=(X div 57)+1;
+  if (y>0)and(y<57*7) then
+  begin
+   Ye:=(Y div 57)+1;
+   if InGame then
+   begin
+    if not a[Ye,Xe].Floated then
+     case a[Ye,Xe].PipeIndex of
+     0..2:inc(a[Ye,Xe].PipeIndex);
+     3:a[Ye,Xe].PipeIndex:=0;
+     4:inc(a[Ye,Xe].PipeIndex);
+     5:a[Ye,Xe].PipeIndex:=4;
+    end;
+    button2.Click;
+   end;
+  end;
  end;
 end;
 
@@ -378,21 +387,21 @@ end;
 
 procedure TForm1.N4Click(Sender: TObject);
 begin
- n4.Checked:=true;
+ N4.Checked:=true;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
  if InGame then
  begin
- PipeLength:=0;
- ValveRotation:=true;
- x:=n;
- y:=1;
- i:=1;
- BottomFloat:=true;
- ValveOpen:=true;
- button2.Click;
+  PipeLength:=0;
+  ValveRotation:=true;
+  x:=n;
+  y:=1;
+  i:=1;
+  BottomFloat:=true;
+  ValveOpen:=true;
+  button2.Click;
  end;
 end;
 
@@ -544,21 +553,26 @@ begin
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+var i:byte;
 begin
- with TIniFile.Create(ExtractFilePath(Application.ExeName)+'settings.ini') do
+ with TIniFile.Create(ExtractFilePath(Application.ExeName)+'data.ini') do
   begin
-   WriteString('MAIN','Nickname1',BestTime.Name);
-   WriteString('MAIN','Value1',IntToStr(BestTime.Value));
-   WriteString('MAIN','Nickname3',BestLength.Name);
-   WriteString('MAIN','Value2',IntToStr(BestLength.Value));
-   WriteString('MAIN','Nickname3',BestShort.Name);
-   WriteString('MAIN','Value3',IntToStr(BestShort.Value));
+   WriteString('HIGHSCORE','Nickname1',BestTime.Name);
+   WriteString('HIGHSCORE','Value1',IntToStr(BestTime.Value));
+   WriteString('HIGHSCORE','Nickname3',BestLength.Name);
+   WriteString('HIGHSCORE','Value2',IntToStr(BestLength.Value));
+   WriteString('HIGHSCORE','Nickname3',BestShort.Name);
+   WriteString('HIGHSCORE','Value3',IntToStr(BestShort.Value));
+   WriteString('MAIN','N',inttostr(Unit5.n));
+   for i:=1 to Unit5.n do
+    WriteString('USERS','U'+inttostr(i),Unit5.p[i].name);
  end;
+ Application.Terminate;
 end;
 
 procedure TForm1.N6Click(Sender: TObject);
 begin
-ShellExecute(Application.Handle,PChar('open'),PChar('NewProject_Help.exe'),nil,PChar(ExtractFilePath(Application.ExeName)),SW_SHOWNORMAL);
+ MessageDlg('Èçâèíèòå, ñïğàâêà â ıòîé âåğñèè îòñóòñòâóåò =Ğ',mtInformation,[mbOK],0)
 end;
 
 procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -567,6 +581,19 @@ begin
   canclose:=True
  else
   canclose:=False;
+end;
+
+procedure TForm1.Alvbry1Click(Sender: TObject);
+var i,j:word;
+begin
+ Timer1.Enabled:=false;
+ Timer2.Enabled:=false;
+ Timer3.Enabled:=false;
+ for i:=1 to n do
+  for j:=1 to m do
+   Form4.StringGrid1.Cells[j-1,i-1]:=inttostr(b[k][i,j])+'('+inttostr(a[i,j].PipeIndex)+')';
+ Form4.Label1.Caption:=inttostr(k);
+ Form4.show;
 end;
 
 end.
